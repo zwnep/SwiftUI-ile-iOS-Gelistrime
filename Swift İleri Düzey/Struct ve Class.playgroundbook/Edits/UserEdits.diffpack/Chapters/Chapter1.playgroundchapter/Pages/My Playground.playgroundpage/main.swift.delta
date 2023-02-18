@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/*
+ Struct ve Class yapısı, temelde programcının kendi veri tiplerini oluşturmasını sağlar. 
+ Bu oluşturulan yeni veri tipi birden çok temel veri tipini bünyesinde barındırabileceği gibi, bir takım metodlar ile kendine has davranış özellikleri kazanabilir.
+
+ Bu notada peki neden iki farklı anahtar kelime kullanıyoruz diye düşünebilirsiniz. Struct ve Class çok benzer gözükse de hafızada tutulma şekilleri açısından birbirinden çok farklı yapılardır.
+
+ -&gt; Struct, veri tipidir ve bir kopyası üretildiğinde iki kopya birbirinden bağımsız hafıza adreslerini temsil eder. 
+ Bu da bir nesnede yapılan değişikliğin kopyası üzerinde hiç bir etkisi olmayacağı anlamına gelir.
+
+ -&gt; Class ise bir referans tipidir. Bir nesneden oluşturduğunuz kopyalar hafızada aynı adresleri gösterir.
+Bu da bir nesnenin kopyası üstünde yapacağınız değişikliğin, nesnenin orjinali üstünde de aynı etkiye sebep olacağı anlamına gelir. 
+ Nesneye yönelimli dillerdeki pointer yapısına hakimseniz bu kısmı anlamanız daha kolay olacaktır.
+ */
+
+/*
+ Bu yapıyı basit bir anoloji üstünden anlatmak istiyorum. Bu sayede kafanızda daha net şekilleneceğine inanıyorum. 
+ 
+ STRUCT daha çok sizin cihazınızın yerel hafızasında yer alan bir dosyaya benzer. 
+ Bu dosyanın bir kopyasını başka birine gönderseniz ve o kişi de dosya üstünde değişiklik yapsa sizin yerel hafızanızdaki dosya bu değişiklikten etkilenmeyecektir. 
+ Çünkü bu iki dosya birbirinden tamamen bağımsız iki farklı varlıktır. 
+ 
+ Halbuki bu dosya bulutta olsa ve sizde bu buluttaki dosyaya erişim için birisine yetki verseniz, o kişinin dosya üstünde yaptığı değişiklikler dosyanın orjinalini etkileyecektir. 
+ Bu durumda ikinizin de gördüğü dosya aynıdır fakat o dosyaya iki farklı kullanıcı erişebilmektedir. 
+ 
+ İlk örnek Struct yapısına karşılık gelirken ikinci örnek Class yapısına karşılık gelir.
+ Bu şekilde bir kullanıma başvurulmasının sebebi Nesneye Yönelimli/Nesne Tabanlı geliştirme paradigmasının temelinde yatmaktadır. 
+ Nesne, içinde bulunduğumuz fiziksel dünyadaki bir nesnenin teknolojik ortamdaki yansımasıdır.
+ Bu nesne bir hafızaya sahiptir, kendi davranışları vardır ve bir hayat döngüsü mevcuttur. 
+ Nesne hayat döngüsü sona erene kadar hafızada verileri tutmaya ve kendine has davranışları sergilemeye devam eder.
+ O bir veri tipinden çok bir varlıktır ve tıpkı dünyamızda olduğu gibi benzerleri olsa da eşi yoktur.
+ Hafızada bulunduğu adres onun benzersiz kimliğidir. Tıpkı canlıların DNA'sının diğer canlılardan farklı olması gibidir.
+ */
+
+
+//Struct ve Class Yapısının Karşılaştırılması
+/*
+ Struct ve Class yapısının pek çok ortak yönü vardır. Bunlar;
+
+ Verileri Özellik(Property) olarak isimlendirdiğimiz değişkenler içinde saklayabilirler.
+ Davranışları Metod(Method) olarak isimlendirdiğimiz fonksiyon tanımları ile sağlayabilirler.
+ Başlatıcı Metod(Initializer)'ları olabilir. Bu metod Struct veya Class oluştuğunda özelliklerin alacağı ilk değeri ifade eder.
+ Extension yapısı ile yeni özellikler eklenebilir.
+ Protokol tanımlarını sağlayabilirler.
+ 
+ Class yapısının sahip olduğu ama Struct yapısında olmayan bazı özellikler ise şu şekildedir;
+
+ Class bir başka Class yapısından Miras(Inheritance) alabilir.
+ Class tipini programın Çalışma Anında(Runtime) kontrol edebiliriz.
+ Class yapısı ile işimiz bittiğinde onu hafızadan silmemizi sağlayan Sonlandırıcı(Deinitializer) metodlarını çağırmamız gerekir.
+ Bir Class nesnesi birden çok Referans(Referance)'a sahip olabilir.
+ */
+
+//Class ve Struct Yapısına Ait Ortak Terimler
+/*
+ Özellik(Property): Class veya Struct içinde tanımladığımız değişkenlere verilen isimdir. Hafızada veri tutmaya yararlar. İsimlendirme dışında değişkenlerden farklı değillerdir.
+ 
+ Metod(Method): Class veya Struct içinde tanımladığımız fonksiyonlara verilen isimdir. Bir davranış kazandırmak için kullanılır. İsimlendirme dışında fonksiyondan farkları yoktur.
+ 
+ Başlatıcı(Initializer): Metodlara çok benzer şekilde tanımlanırlar. En büyük özelliği Class veya Struct oluşturulurken çalışır. Bu nedenle gerekli değişken atamaları bu kısımda yapılır.
+ 
+ Eklenti(Extension): Extension anahtar kelimesi ile ekleme yapmak istediğimiz Class veya Struct adını yazar ve süslü parantez bloğu içinde mevcut yapıya eklemek istediğimiz özellik veya metod tanımlarını yaparız.
+ 
+ Protokol(Protocol): Protokol içeriğinde birtakım değişken ve fonksiyon imzası barındırır. Bu protokol bir Struct veya Class tarafından karşılanacaksa, protokol içinde yer alan imzaların mevcut yapı içinde tanımlı olması beklenir.
+ */
+
+
+//Class Yapısına Ait Terimler
+/*
+ Sonlandırıcı(Deinitializer): Sonlandırıcı tıpkı başlatıcı gibi tanımlanır. Class hafızadan silinmeden önce yapılması istenen işlemler bu kısımda belirtilir.
+ 
+ Referans(Referance): Referans mevcut nesneyi gösteren yapıları temsil eder. Bulut dosya analojisinde, buluttaki dosyaya erişim sağlayan kişiler o dosyanın referanslarını temsil eder. Eğer dosyaya kimsenin erişimi yoksa dosya hafızadan silinmelidir. Bu işlemi Swift otomatik olarak yapar. Eğer bu işlem yapılmazsa gereksiz hafıza kullanımı oluşur. Bu duruma Hafıza Kaçağı(Memory Leak) denir. Uygulamanın uzun süre kullanımı sonucu hafıza kaçağı işletim sisteminin uygulama için ayırıdığı kaynakları aşarsa uygulama çöker.
+ 
+ Miras(Inheritance): Miras adından da anlaşılabileceği gibi, bir Class'ın bir başka Class'da yer alan özellik ve metodları bire bir devralmasıdır. Bu sayede kod tekrarı önlenir ve kodun daha kolay yönetimi sağlanır.
+ */
+
+
+//Class ve Struct Tanımlama
+
+struct StructureDefinition {
+    // Struct'a ait özellik ve metod tanımları bu kod bloğu içinde yapılır. 
+}
+
+class ClassDefinition {
+    // Class'a ait özellik ve metod tanımları bu kod bloğu içinde yapılır.
+}
+
+/*
+ Struct ve Class isimlendirmesinde, değişken ve fonksiyon isimlendirmesinden farklı olarak dikkat etmeniz gereken kısım,
+ büyük harfle başlıyor olmalarıdır. 
+ Struct tanımı için isimden önce struct anahtar kelimesi, Class tanımı için ise Class adından önce class anahtar kelimesi kullanmanız gerekmektedir.
+ */
+
+struct Diploma {
+    var title: String = "Licance"
+    var grade: String = "BSc"
+}
+
+class Student {
+    var no: Int = 001
+    var name: String = "John Doe"
+}
+
+let licanceDiploma = Diploma()
+let johnDoe = Student()
+
+
+//Özelliğe Erişmek
+print("Okulumuzun öğrencisi \(johnDoe.name), \(licanceDiploma.grade) diploması almaya hak kazanmıştır.")
+// Çıktı: Okulumuz öğrencisi John Doe, BSc diploması almaya hak kazanmıştır.
+
+
+</string>
+			<key>ModifiedRange</key>
+			<string>{0, 6403}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{0, 0}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
+</dict>
+</plist>
